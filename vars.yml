@@ -1,0 +1,7 @@
+---
+jenkins_image: "jenkins/jenkins:lts"
+jenkins_container_name: "jenkins"
+jenkins_ports:
+  - "8080:8080"
+  - "50000:50000"
+jenkins_path: "/var/jenkins_home:/var/jenkins_home"
