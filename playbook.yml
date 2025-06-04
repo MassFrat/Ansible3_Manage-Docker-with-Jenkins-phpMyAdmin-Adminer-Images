@@ -46,7 +46,6 @@
         ports:
           - "8081:8081"
         state: started
-          #restart-policy: always
         volumes:
           - "/var/jenkins_home:/var/jenkins_home"
 
