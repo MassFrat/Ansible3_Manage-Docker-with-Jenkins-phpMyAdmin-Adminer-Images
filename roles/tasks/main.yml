@@ -1,0 +1,75 @@
+---
+- name: Install Python and Pip
+  package:
+    name:
+      - python3
+      - python3-pip
+    state: present
+
+- name: Install Docker package for Ubuntu
+  apt:
+    name: docker.io
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Start Docker service
+  service:
+    name: docker
+    enabled: yes 
+    state: started
+
+- name: Restart Docker
+  service:
+    name: docker
+    state: restarted
+
+          
+- name: Pull the latest Jenkins image
+  docker_image:
+    name: "{{ jenkins_image }}"
+    tag: "latest"
+    source: pull
+    state: present
+
+- name: Create and Run Jenkins Container
+  docker_container:
+    name: jenkins
+    image: jenkins/jenkins:latest
+    ports:
+      - "8081:8081"
+    state: started
+    volumes:
+      - "/var/jenkins_home:/var/jenkins_home"
+
+
+- name: Print a message for Jenkins
+  debug:
+   msg: "Jenkins is ready"
+
+
+- name: Pull the latest phpMyAdmin image
+  docker_image:
+    name: phpmyadmin/phpmyadmin
+    tag: latest
+    source: pull
+    force_source: yes 
+  register: pull_result
+
+- name: Run phpMyAdmin container
+  docker_container:
+    name: phpmyadmin
+    image: phpmyadmin
+    restart_policy: always
+    state: started
+
+- name: Verify Adminer image is present
+  docker_image_info:
+    name: "adminer"
+  register: final_image_check
+
+- name: Run Adminer container
+  docker_container:
+    name: "adminer_container"
+    image: "adminer:latest"
+    restart_policy: always
+    state: started  
