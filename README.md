@@ -1,5 +1,10 @@
 # Managing Docker with Jenkins, phpMyAdmin, and Adminer
+<br/>
+
 This guide explains how to set up and manage a Docker environment that includes Jenkins for continuous integration, phpMyAdmin for MySQL database administration, and Adminer as an alternative database management tool.
+
+<br/>
+
 
 ## Overview:
 This setup provides a complete development and deployment pipeline where Jenkins handles automated builds and deployments, while phpMyAdmin and Adminer offer different interfaces for database management. All services run in isolated Docker containers, making the environment portable and easy to maintain.
@@ -35,4 +40,4 @@ This configuration supports various development workflows. Use Jenkins to automa
 ## Troubleshooting:
 Common issues include port conflicts, network connectivity problems, and permission errors with mounted volumes. Check container logs for specific error messages and ensure proper file permissions on host directories mounted as volumes. Verify network connectivity between containers and confirm environment variables are correctly set.
 
-This Docker setup provides a robust foundation for development and database management tasks, offering flexibility and scalability while maintaining isolation between services.
+### This Docker setup provides a robust foundation for development and database management tasks, offering flexibility and scalability while maintaining isolation between services.
