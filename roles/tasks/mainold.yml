@@ -1,0 +1,69 @@
+---
+- name: Install Docker package
+    apt:
+      name: docker.io
+      update_cache: yes  
+      state: present
+
+- name: Start Docker service
+  service:
+    name: docker
+    enabled: yes  
+    state: started
+        
+- name: Restart Docker
+  service:
+    name: docker
+    state: restarted 
+
+
+- name: Pull the latest Jenkins image
+  docker_image:
+    name: "{{ jenkins_image }}"
+    tag: "latest"
+    source: pull
+ 
+- name: Run Jenkins Container 
+  docker_container:
+    name: 
+    image: "jenkins/jenkins:latest"
+    state: started
+    restart-policy: always
+    volumes:
+    - /var/jenkins_home:/var/jenkins_home
+
+
+- name: Print a message for Jenkins 
+  debug:
+    msg: "Jenkins is ready" 
+          
+
+- name: Pull the latest phpMyAdmin image
+  docker_image:
+    name: phpmyadmin
+    tag: latest
+    pull: yes 
+
+- name: Run phpMyAdmin container
+  docker_container:
+    name: phpmyadmin
+    image: phpmyadmin
+    ports:
+      - "8080:80"
+    restart_policy: always
+    state: started
+        
+- name: Ensure Adminer image is present
+  community.docker.docker_image:
+    name: "adminer"
+    tag: "latest"
+    state: present
+
+    - name: Run Adminer container
+      community.docker.docker_container:
+        name: "adminer_container"
+        image: "adminer:latest"
+        ports:
+          - "8080:8080"
+        restart_policy: always  
+        state: started
