@@ -44,7 +44,7 @@
 
 - name: Print a message for Jenkins
   debug:
-   msg: "Jenkins is ready"
+    msg: "Jenkins is ready"
 
 
 - name: Pull the latest phpMyAdmin image
